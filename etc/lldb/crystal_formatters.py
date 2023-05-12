@@ -29,9 +29,9 @@ class CrystalArraySyntheticProvider:
         try:
             elementType = self.buffer.type.GetPointeeType()
             offset = elementType.size * index
-            return self.buffer.CreateChildAtOffset('[' + str(index) + ']', offset, elementType)
+            return self.buffer.CreateChildAtOffset(f'[{str(index)}]', offset, elementType)
         except Exception as e:
-            print('Got exception %s' % (str(e)))
+            print(f'Got exception {str(e)}')
             return None
 
 def findType(name, module):
@@ -53,7 +53,7 @@ def CrystalString_SummaryProvider(value, dict):
     len = byteSize or len
     strAddr = value.child[2].load_addr
     val = process.ReadCStringFromMemory(strAddr, len + 1, error)
-    return '"%s"' % val
+    return f'"{val}"'
 
 
 def __lldb_init_module(debugger, dict):
